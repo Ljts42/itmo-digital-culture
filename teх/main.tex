@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T2A]{fontenc}
+\usepackage[russian]{babel}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{arcs}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{stackrel}
+\usepackage{xcolor}
+
+
+\everymath{\displaystyle}
+
+\begin{document}
+\pagestyle{empty}
+\normalsize
+
+\section{Матанализ от Виноградова}
+\subsection{}
+
+Пусть $M \in \mathbb{M}_{kn}^{(1)}$, $E \in \mathbb{A}_M$.
+
+\begin{enumerate}
+    \item Если множесто $E$ малое, $U$ --- стандартная окрестность, $E \subset U$, $\varphi$ --- параметризация $U$, \\то полагают $$\mu_M E = \int_{\varphi^{-1}(E)} \sqrt{\mathcal{D}_\varphi} \mathrm{d}\mu_k.$$
+    \item Если $E = \bigcup\limits_\nu E_\nu$, где $E_\nu$ --- дизъюнктные малые измеримые множества, то полагают
+    $$\mu_M E = \sum\limits_\nu \mu_M E_\nu.$$
+\end{enumerate}
+Функция $\mu_M$ называется \emph{мерой на многообразии} $M$.
+
+\subsection{}
+
+\textbf{Определение.} Ряд вида
+$$\sum\limits_{k=0}^\infty c_k (z - z_0)^k, \eqno(1)$$
+где $c_k$, $z$, $z_0 \in \mathbb{C}$, называется \emph{степенным рядом}. Числа $c_k$ называются его \emph{коэффициентами}, а $z_0$ --- центром. Если $a_k$, $x$, $x_0 \in \mathbb{R}$, то ряд
+$$\sum\limits_{k=0}^\infty a_k (x - x_0)^k \eqno(2)$$
+называется \emph{вещественным степенным рядом}.
+\\\\\textbf{Определение.} Величина $R \in [0, +\infty]$ называется \emph{радиусом сходимости} степенного ряда, если
+\begin{enumerate}
+    \item для всех $z$, таких что $|z - z_0| < R$, степенной ряд сходится
+    \item для всех $z$, таких что $|z - z_0| > R$, степенной ряд расходится
+\end{enumerate}
+
+\section{Большое задание от доктора Тренча}
+\subsection{}
+
+Let $u(x, t) = v(x, t) + q(x)$; then $u_t = v_t$ and $u_{xx} = v_{xx} + q''$, so
+$$\begin{array}{c}
+v_t = v_{xx} + q'' + \pi^2 \sin \pi x, \quad 0 < x < 1, \quad t > 0, \\
+v(0, t) = -q(0), \quad v_x(1, t) = -\pi - q'(1), \quad t > 0, \\
+v(x, 0) = 2 \sin \pi x - q(x), \quad 0 \leq x \leq 1.
+\end{array} \eqno(A)$$
+We want $q''(x) = -\pi^2 \sin \pi x$, $q(0) = 0$, $q'(1) = -\pi$; $q'(x) = \pi \cos \pi x + a_2$; $q'(1) = -\pi \Rightarrow a_2 = 0$;
+$q'(x) = \pi \cos \pi x$; $q(x) = \sin \pi x + a_1$; $q(0) = 0 \Rightarrow a_1 = 0$; $q(x) = \sin \pi x$. Now (A) reduces to
+$$\begin{array}{c}
+v_t = v_{xx}, \quad 0 < x < 1, \quad t > 0, \\
+v(0, t) = 0, \quad v_x(1, t) = 0, \quad t > 0, \\
+v(x, 0) = \sin \pi x, \quad 0 \leq x \leq 1.
+\end{array}$$
+$$
+\begin{aligned}
+\alpha_n \quad &= \quad 2 \int\nolimits_0^1 \sin \pi x \sin\frac{(2n - 1) \pi x}{2} dx = \int\nolimits_0^1 \left[\frac{\cos(2n - 3) \pi x}{2} - \frac{\cos(2n + 1) \pi x}{2}\right] dx \\
+&= \quad \left.\frac{2}{\pi} \left[\frac{\sin(2n - 3) \pi x / 2}{(2n - 3)} - \frac{\sin(2n + 1) \pi x / 2}{(2n + 1)}\right]\right|_0^1 \\
+&= \quad (-1)^n \frac{2}{\pi} \left[\frac{1}{2n - 3} - \frac{1}{2n + 1}\right] = (-1)^n \frac{8}{\pi} \frac{1}{(2n + 1)(2n - 3)};
+\end{aligned}
+$$
+$S_M(x) = \frac{8}{\pi} \sum\limits_{n=1}^\infty \frac{(-1)^n}{(2n + 1)(2n - 3)} \sin \frac{(2n - 1) \pi x}{2}$. From Definition 12.1.4,
+$$v(x, t) = \frac{8}{\pi} \sum\limits_{n=1}^\infty \frac{(-1)^n}{(2n + 1)(2n - 3)} e^{-(2n - 1)^2 \pi^2 t/4} \sin \frac{(2n - 1) \pi x}{2}.$$
+Therefore, $u(x, t) = \sin \pi x + \frac{8}{\pi} \sum\limits_{n=1}^\infty \frac{(-1)^n}{(2n + 1)(2n - 3)} e^{-(2n - 1)^2 \pi^2 t/4} \sin \frac{(2n - 1) \pi x}{2}.$
+
+\section{Маленькие задания от доктора Тренча}
+\subsection{}
+
+$t \sin \omega t \leftrightarrow \frac{2 \omega s}{(s^2 + \omega^2)^2}$ and $t \cos \omega t \leftrightarrow \frac{s^2 - \omega^2}{(s^2 + \omega^2)^2}$, so $H(s) = \frac{2 \omega s (s^2 - \omega^2)}{(s^2 + \omega^2)^4}$.
+
+\subsection{}
+
+Substituting $x = t - \tau$ yields $\int_0^t f(t - \tau) g(\tau) d\tau = - \int_t^0 f(x) g(t - x)(-dx) = \int_0^t f(x) g(t - x)dx = \int_0^t f(\tau) g(t - \tau) d\tau$.
+
+\subsection{}
+
+$e^t \leftrightarrow \frac{1}{s - 1}$ and $\sin at \leftrightarrow \frac{a}{s^2 + a^2}$, so $H(s) = \frac{a}{(s - 1)(s^2 + a^2)}$.
+
+\end{document}

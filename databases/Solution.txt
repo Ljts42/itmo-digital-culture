@@ -1,0 +1,61 @@
+1
+SELECT COUNT(*) FROM User WHERE User.passwordHash is NULL;
+
+2
+SELECT User.id AS distinctUserIds FROM User WHERE EXISTS( SELECT * FROM Post WHERE Post.userId = User.id) ORDER BY id;
+
+3
+SELECT Post.title AS postTitle, (SELECT User.name FROM User WHERE User.id = Post.userId) as authorName FROM Post ORDER BY Post.creationTime, Post.id;
+
+4
+SELECT t2.title FROM (SELECT (ROW_NUMBER() OVER(ORDER BY creationTime)) as partId, userId, creationTime, title FROM (SELECT * FROM Post ORDER BY Post.creationTime, Post.id) t1) t2 GROUP BY t2.userId ORDER BY t2.creationTime, t2.partId;
+
+SELECT title FROM (SELECT * FROM Post ORDER BY creationTime, id) oPost GROUP BY oPost.userId ORDER BY oPost.creationTime, oPost.id;
+
+SELECT t2.title FROM (SELECT ROW_NUMBER() OVER() as id, userId, title, creationTime FROM (SELECT Post.userId, Post.title, Post.creationTime FROM Post ORDER BY Post.creationTime, Post.id) t1) t2 GROUP BY t2.userId ORDER BY t2.creationTime, t2.id;
+
+SELECT ROW_NUMBER() OVER() as id, Post.userId, Post.title, Post.creationTime FROM Post ORDER BY creationTime, id;
+
+SELECT ROW_NUMBER() OVER(PARTITION BY name ORDER BY date) as rowid,date,name
+FROM tablename;
+
+SELECT t2.title FROM (SELECT ROW_NUMBER() OVER(PARTITION BY id) as partId, userId, creationTime, title FROM (SELECT * FROM Post ORDER BY Post.creationTime, Post.id) t1) t2 GROUP BY t2.userId ORDER BY t2.creationTime, t2.partId;
+
+SELECT title FROM Post JOIN (SELECT title, creationTime FROM Post ORDER BY creationTime, id) oPost GROUP BY userId ORDER BY creationTime, id;
+
+
+SELECT t as title FROM (Post JOIN (SELECT title as t, creationTime as c, userId as u FROM Post ORDER BY creationTime, id) p) GROUP BY u ORDER BY c, id;
+
+SELECT * FROM ((SELECT id FROM Post) i JOIN (SELECT userId as u, title as t, creationTime as c FROM Post ORDER BY creationTime, id) p);
+
+
+5
+SELECT DATE(Post.creationTime) AS postCreationDate, COUNT(*) AS postCount FROM Post GROUP BY postCreationDate ORDER BY postCreationDate;
+
+6
+CREATE TABLE `Comment` (
+    `id` BIGINT NOT NULL AUTO_INCREMENT,
+    `postId` BIGINT NOT NULL,
+    `userId` BIGINT NOT NULL,
+    `text` LONGTEXT NOT NULL,
+    `creationTime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    INDEX `index_Post_creationTime` (`creationTime`)
+) ENGINE = InnoDB;
+
+ALTER TABLE `Comment` ADD CONSTRAINT `fk_Comment_postId` FOREIGN KEY (`postId`) REFERENCES `Post` (`id`);
+ALTER TABLE `Comment` ADD CONSTRAINT `fk_Comment_userId` FOREIGN KEY (`userId`) REFERENCES `User` (`id`);
+
+INSERT INTO `Comment` (`postId`, `userId`, `text`, `creationTime`) VALUES
+(1, 4, 'Bank laugh few thousand operation.', '2013-01-16 09:48:30'),
+(1, 4, 'Mention use perhaps speech add week others.', '2014-02-10 22:20:42'),
+(5, 3, 'Hour remain quickly six sign throughout happen power.', '2001-05-16 13:42:43'),
+(6, 2, 'Smile race material season commercial.', '2013-10-21 19:29:35'),
+(1, 4, 'Me season somebody meet process.', '1987-11-18 23:48:31'),
+(6, 2, 'Degree seven must spend dog nature country.', '1978-10-15 19:14:35'),
+(4, 1, 'Reflect recently a herself.', '2014-02-17 08:47:43'),
+(4, 4, 'Hair end create season benefit whether check.', '1986-05-09 09:19:09'),
+(1, 4, 'Trade above figure writer movement.', '2009-06-03 02:22:46');
+
+7
+SELECT id FROM (SELECT Post.id, COUNT(postId) AS commentCount FROM (Post LEFT JOIN Comment ON Post.id = Comment.postId) GROUP BY Post.id ORDER BY commentCount DESC, Post.id ASC) t;

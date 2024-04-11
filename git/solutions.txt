@@ -1,0 +1,86 @@
+>>> commit-one-file-staged
+git reset B.txt
+git commit -m "commit-one-file-staged"
+
+>>> ignore-them
+echo "*.exe
+*.o
+*.jar
+libraries/" >> .gitignore
+git add .
+git commit -m "ignore-them"
+
+>>> merge-conflict
+git merge "another-piece-of-work"
+rm equation.txt
+echo "2 + 3 = 5" >> equation.txt
+git add .
+git commit -m "merge-conflict"
+git merge "another-piece-of-work"
+
+>>> save-your-work
+git add program.txt
+git stash
+rm bug.txt
+echo "This file contains bug
+It has to be somewhere.
+I feel like I can smell it.
+How this program could work with such bug?" >> bug.txt
+git add .
+git commit -m "bugfix"
+git stash pop
+echo "Finally, finished it!" >> bug.txt
+git add .
+git commit -m "save-your-work"
+
+>>> change-branch-history
+git rebase hot-bugfix
+
+>>> forge-date
+git commit --amend --date 1987 -m "forge-date"
+
+>>> fix-old-typo
+git rebase -i HEAD~2
+# change "pick" --> "edit"
+rm file.txt
+echo "Hello world" >> file.txt
+git add .
+git rebase --continue
+# change "wordl" --> "world"
+rm file.txt
+echo "Hello world
+Hello world is an excellent program." >> file.txt
+git add .
+git rebase --continue
+
+>>> commit-lost
+git reflog
+git reset HEAD@{1}
+
+>>> too-many-commits
+git rebase -i
+# change "pick" --> "squash" at second commit
+# delete second commit message
+
+>>> executable
+git add --chmod +x script.sh
+git commit -m "executable"
+
+>>> commit-parts
+git add -p
+# s n y n y
+git commit -m "commit-parts-1"
+git add .
+git commit -m "commit-parts-2"
+
+>>> invalid-order
+git rebase -i HEAD~2
+# swap the first 2 lines
+
+>>> search-improved
+git bisect start
+git bisect bad
+git bisect good "1.0"
+git bisect run bash faulty-check
+git bisect reset
+git push origin "the commit that was found":search-improved
